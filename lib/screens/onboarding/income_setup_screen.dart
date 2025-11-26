@@ -29,7 +29,7 @@ class _IncomeSetupScreenState extends State<IncomeSetupScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 40),
-                const Icon(Icons.payments, size: 80, color: Color(0xFF4ECDC4)),
+                const Icon(Icons.payments, size: 80, color: Color(0xFFF16725)),
                 const SizedBox(height: 32),
                 const Text(
                   'Set Your Monthly Income',
@@ -54,25 +54,25 @@ class _IncomeSetupScreenState extends State<IncomeSetupScreen> {
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   style: const TextStyle(
-                    fontSize: 32,
+                    fontSize: 48,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF4ECDC4),
+                    color: Color(0xFFF16725),
                   ),
                   decoration: InputDecoration(
                     prefixText: '৳ ',
                     prefixStyle: const TextStyle(
-                      fontSize: 32,
+                      fontSize: 48,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF4ECDC4),
+                      color: Color(0xFFF16725),
                     ),
                     hintText: '0',
                     hintStyle: TextStyle(
-                      fontSize: 32,
+                      fontSize: 48,
                       fontWeight: FontWeight.bold,
                       color: Colors.grey.withOpacity(0.3),
                     ),
                     filled: true,
-                    fillColor: const Color(0xFF4ECDC4).withOpacity(0.1),
+                    fillColor: const Color(0xFFF16725).withOpacity(0.1),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
                       borderSide: BorderSide.none,

@@ -93,12 +93,12 @@ class SettingsScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: const Color(0xFF4ECDC4).withOpacity(0.1),
+              color: const Color(0xFFF16725).withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
               provider.isDarkMode ? Icons.dark_mode : Icons.light_mode,
-              color: const Color(0xFF4ECDC4),
+              color: const Color(0xFFF16725),
               size: 24,
             ),
           ),
@@ -129,7 +129,7 @@ class SettingsScreen extends StatelessWidget {
           Switch(
             value: provider.isDarkMode,
             onChanged: (value) => provider.toggleThemeMode(),
-            activeThumbColor: const Color(0xFF4ECDC4),
+            activeColor: const Color(0xFFF16725),
           ),
         ],
       ),
@@ -158,12 +158,12 @@ class SettingsScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF4ECDC4).withOpacity(0.1),
+                  color: const Color(0xFFF16725).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
                   Icons.payments,
-                  color: Color(0xFF4ECDC4),
+                  color: Color(0xFFF16725),
                   size: 24,
                 ),
               ),
@@ -186,7 +186,7 @@ class SettingsScreen extends StatelessWidget {
             style: const TextStyle(
               fontSize: 28,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF4ECDC4),
+              color: Color(0xFFF16725),
             ),
           ),
           const SizedBox(height: 16),
@@ -195,7 +195,7 @@ class SettingsScreen extends StatelessWidget {
             child: OutlinedButton(
               onPressed: () => _showEditIncomeDialog(context, currentIncome),
               style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: Color(0xFF4ECDC4)),
+                side: const BorderSide(color: Color(0xFFF16725)),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -204,7 +204,7 @@ class SettingsScreen extends StatelessWidget {
               child: const Text(
                 'Edit Income',
                 style: TextStyle(
-                  color: Color(0xFF4ECDC4),
+                  color: Color(0xFFF16725),
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -237,12 +237,12 @@ class SettingsScreen extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF45B7D1).withOpacity(0.1),
+                  color: const Color(0xFF0066CC).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(
                   Icons.category,
-                  color: Color(0xFF45B7D1),
+                  color: Color(0xFF0066CC),
                   size: 24,
                 ),
               ),
@@ -306,7 +306,7 @@ class SettingsScreen extends StatelessWidget {
             child: OutlinedButton(
               onPressed: () => _showAddCategoryDialog(context, provider),
               style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: Color(0xFF45B7D1)),
+                side: const BorderSide(color: Color(0xFF0066CC)),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -315,7 +315,7 @@ class SettingsScreen extends StatelessWidget {
               child: const Text(
                 'Add Category',
                 style: TextStyle(
-                  color: Color(0xFF45B7D1),
+                  color: Color(0xFF0066CC),
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -428,12 +428,12 @@ class SettingsScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF98D8C8).withOpacity(0.1),
+                    color: const Color(0xFF9C4A24).withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(
                     Icons.info_outline,
-                    color: Color(0xFF98D8C8),
+                    color: Color(0xFF9C4A24),
                     size: 24,
                   ),
                 ),
@@ -509,14 +509,14 @@ class SettingsScreen extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Income updated successfully'),
-                      backgroundColor: Color(0xFF4ECDC4),
+                      backgroundColor: Color(0xFFF16725),
                     ),
                   );
                 }
               }
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF4ECDC4),
+              backgroundColor: const Color(0xFFF16725),
             ),
             child: const Text('Save'),
           ),
@@ -595,12 +595,12 @@ class SettingsScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? const Color(0xFF4ECDC4).withOpacity(0.2)
+                              ? const Color(0xFFF16725).withOpacity(0.2)
                               : Colors.grey.shade100,
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
                             color: isSelected
-                                ? const Color(0xFF4ECDC4)
+                                ? const Color(0xFFF16725)
                                 : Colors.transparent,
                             width: 2,
                           ),
@@ -609,7 +609,7 @@ class SettingsScreen extends StatelessWidget {
                           iconData['icon'] as IconData,
                           size: 24,
                           color: isSelected
-                              ? const Color(0xFF4ECDC4)
+                              ? const Color(0xFFF16725)
                               : Colors.grey.shade600,
                         ),
                       ),
@@ -675,14 +675,14 @@ class SettingsScreen extends StatelessWidget {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Category added successfully'),
-                        backgroundColor: Color(0xFF4ECDC4),
+                        backgroundColor: Color(0xFFF16725),
                       ),
                     );
                   }
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF4ECDC4),
+                backgroundColor: const Color(0xFFF16725),
               ),
               child: const Text('Add'),
             ),

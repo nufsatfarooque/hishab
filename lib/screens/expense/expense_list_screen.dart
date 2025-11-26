@@ -95,7 +95,7 @@ class ExpenseListScreen extends StatelessWidget {
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFF4ECDC4).withOpacity(0.1),
+                            color: const Color(0xFFF16725).withOpacity(0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Text(
@@ -103,7 +103,7 @@ class ExpenseListScreen extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF4ECDC4),
+                              color: Color(0xFFF16725),
                             ),
                           ),
                         ),
@@ -246,7 +246,7 @@ class ExpenseListScreen extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Color(0xFF4ECDC4),
+                color: Color(0xFFF16725),
               ),
             ),
           ],

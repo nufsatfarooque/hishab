@@ -71,14 +71,14 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                   style: const TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF4ECDC4),
+                    color: Color(0xFFF16725),
                   ),
                   decoration: InputDecoration(
                     prefixText: '৳ ',
                     prefixStyle: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF4ECDC4),
+                      color: Color(0xFFF16725),
                     ),
                     hintText: '0.00',
                     hintStyle: TextStyle(
@@ -87,7 +87,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       color: Colors.grey.withOpacity(0.3),
                     ),
                     filled: true,
-                    fillColor: const Color(0xFF4ECDC4).withOpacity(0.1),
+                    fillColor: const Color(0xFFF16725).withOpacity(0.1),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16),
                       borderSide: BorderSide.none,
@@ -225,7 +225,7 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
                       children: [
                         const Icon(
                           Icons.calendar_today,
-                          color: Color(0xFF4ECDC4),
+                          color: Color(0xFFF16725),
                         ),
                         const SizedBox(width: 12),
                         Text(

@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: const Color(0xFF4ECDC4),
+        selectedItemColor: const Color(0xFFF16725),
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 );
               },
-              backgroundColor: const Color(0xFF4ECDC4),
+              backgroundColor: const Color(0xFFF16725),
               icon: const Icon(Icons.add, color: Colors.white),
               label: const Text(
                 'Add Expense',
@@ -200,22 +200,22 @@ class DashboardTab extends StatelessWidget {
                       'This Week',
                       weekTotal,
                       Icons.calendar_today,
-                      const Color(0xFF45B7D1),
+                      const Color(0xFF0066CC),
                     ),
                     const SizedBox(height: 16),
                     _buildSummaryCard(
                       'This Month',
                       monthTotal,
                       Icons.calendar_month,
-                      const Color(0xFF98D8C8),
+                      const Color(0xFFF16725),
                     ),
                     const SizedBox(height: 24),
-                    const Text(
+                    Text(
                       'Quick Stats',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF2C3E50),
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -342,7 +342,7 @@ class DashboardTab extends StatelessWidget {
   Color _getStatusColor(SpendingStatus status) {
     switch (status) {
       case SpendingStatus.green:
-        return const Color(0xFF4ECDC4);
+        return const Color(0xFFF16725);
       case SpendingStatus.yellow:
         return const Color(0xFFF7DC6F);
       case SpendingStatus.red:

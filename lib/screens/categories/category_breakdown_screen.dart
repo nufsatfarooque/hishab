@@ -113,7 +113,7 @@ class _CategoryBreakdownScreenState extends State<CategoryBreakdownScreen> {
                             style: const TextStyle(
                               fontSize: 32,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF4ECDC4),
+                              color: Color(0xFFF16725),
                             ),
                           ),
                           const SizedBox(height: 32),

@@ -25,9 +25,15 @@ class MyApp extends StatelessWidget {
             themeMode: provider.themeMode,
             theme: ThemeData(
               useMaterial3: true,
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: const Color(0xFF4ECDC4),
-                brightness: Brightness.light,
+              colorScheme: ColorScheme.light(
+                primary: const Color(0xFFF16725),
+                secondary: const Color(0xFF0066CC),
+                tertiary: const Color(0xFF9C4A24),
+                surface: Colors.white,
+                onPrimary: Colors.white,
+                onSecondary: Colors.white,
+                onSurface: const Color(0xFF231F20),
+                surfaceContainerHighest: const Color.fromARGB(255, 255, 245, 243),
               ),
               fontFamily: 'Roboto',
               scaffoldBackgroundColor: Colors.white,
@@ -35,12 +41,18 @@ class MyApp extends StatelessWidget {
             ),
             darkTheme: ThemeData(
               useMaterial3: true,
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: const Color(0xFF4ECDC4),
-                brightness: Brightness.dark,
+              colorScheme: ColorScheme.dark(
+                primary: const Color(0xFFF16725),
+                secondary: const Color(0xFF0066CC),
+                tertiary: const Color(0xFF9C4A24),
+                surface: const Color(0xFF231F20),
+                onPrimary: Colors.white,
+                onSecondary: Colors.white,
+                onSurface: const Color(0xFFFBD3C0),
+                surfaceContainerHighest: const Color(0xFF2D2A2B),
               ),
               fontFamily: 'Roboto',
-              scaffoldBackgroundColor: const Color(0xFF1A1A1A),
+              scaffoldBackgroundColor: const Color(0xFF231F20),
               appBarTheme: const AppBarTheme(centerTitle: false, elevation: 0),
             ),
             home: const SplashScreen(),

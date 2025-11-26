@@ -19,7 +19,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       description:
           'Keep track of every taka you spend and stay in control of your finances.',
       icon: Icons.account_balance_wallet,
-      color: const Color(0xFF4ECDC4),
+      color: const Color(0xFFF16725),
     ),
     OnboardingPage(
       title: 'Smart Daily Allowance',

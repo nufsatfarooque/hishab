@@ -1,0 +1,352 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import '../../providers/finance_provider.dart';
+import '../expense/add_expense_screen.dart';
+import '../expense/expense_list_screen.dart';
+import '../categories/category_breakdown_screen.dart';
+import '../settings/settings_screen.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _selectedIndex = 0;
+
+  final List<Widget> _screens = [
+    const DashboardTab(),
+    const ExpenseListScreen(),
+    const CategoryBreakdownScreen(),
+    const SettingsScreen(),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _screens[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: const Color(0xFF4ECDC4),
+        unselectedItemColor: Colors.grey,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Expenses'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.pie_chart),
+            label: 'Categories',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ],
+      ),
+      floatingActionButton: _selectedIndex == 0 || _selectedIndex == 1
+          ? FloatingActionButton.extended(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const AddExpenseScreen(),
+                  ),
+                );
+              },
+              backgroundColor: const Color(0xFF4ECDC4),
+              icon: const Icon(Icons.add, color: Colors.white),
+              label: const Text(
+                'Add Expense',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+          : null,
+    );
+  }
+}
+
+class DashboardTab extends StatelessWidget {
+  const DashboardTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<FinanceProvider>(
+      builder: (context, provider, child) {
+        if (provider.isLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final todayTotal = provider.getTodayTotal();
+        final dailyAllowance = provider.getDailyAllowance();
+        final spendingStatus = provider.getSpendingStatus();
+        final weekTotal = provider.getThisWeekTotal();
+        final monthTotal = provider.getThisMonthTotal();
+
+        return SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                expandedHeight: 280,
+                floating: false,
+                pinned: true,
+                backgroundColor: _getStatusColor(spendingStatus),
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          _getStatusColor(spendingStatus),
+                          _getStatusColor(spendingStatus).withOpacity(0.8),
+                        ],
+                      ),
+                    ),
+                    child: SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              'Today\'s Spending',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              '৳${NumberFormat('#,##0.00').format(todayTotal)}',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 48,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white.withOpacity(0.2),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    'Daily Allowance',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    '৳${NumberFormat('#,##0.00').format(dailyAllowance)}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  LinearProgressIndicator(
+                                    value: dailyAllowance > 0
+                                        ? (todayTotal / dailyAllowance).clamp(
+                                            0.0,
+                                            1.0,
+                                          )
+                                        : 0,
+                                    backgroundColor: Colors.white.withOpacity(
+                                      0.3,
+                                    ),
+                                    valueColor:
+                                        const AlwaysStoppedAnimation<Color>(
+                                          Colors.white,
+                                        ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.all(16.0),
+                sliver: SliverList(
+                  delegate: SliverChildListDelegate([
+                    _buildSummaryCard(
+                      'This Week',
+                      weekTotal,
+                      Icons.calendar_today,
+                      const Color(0xFF45B7D1),
+                    ),
+                    const SizedBox(height: 16),
+                    _buildSummaryCard(
+                      'This Month',
+                      monthTotal,
+                      Icons.calendar_month,
+                      const Color(0xFF98D8C8),
+                    ),
+                    const SizedBox(height: 24),
+                    const Text(
+                      'Quick Stats',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF2C3E50),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    _buildQuickStats(provider),
+                    const SizedBox(height: 100), // Space for FAB
+                  ]),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildSummaryCard(
+    String title,
+    double amount,
+    IconData icon,
+    Color color,
+  ) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: color.withOpacity(0.3), width: 1),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: color, size: 28),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '৳${NumberFormat('#,##0.00').format(amount)}',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: color,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildQuickStats(FinanceProvider provider) {
+    final income = provider.income?.monthlyIncome ?? 0;
+    final monthTotal = provider.getThisMonthTotal();
+    final remaining = income - monthTotal;
+
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [const Color.fromARGB(255, 235, 116, 142), const Color.fromARGB(255, 162, 75, 155)],
+        ),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildStatItem('Monthly Income', income, Icons.attach_money),
+              _buildStatItem('Spent', monthTotal, Icons.shopping_cart),
+            ],
+          ),
+          const SizedBox(height: 16),
+          const Divider(color: Colors.white30),
+          const SizedBox(height: 16),
+          _buildStatItem('Remaining', remaining, Icons.account_balance_wallet),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStatItem(String label, double amount, IconData icon) {
+    return Column(
+      children: [
+        Icon(icon, color: Colors.white, size: 24),
+        const SizedBox(height: 8),
+        Text(
+          label,
+          style: const TextStyle(color: Colors.white70, fontSize: 12),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          '৳${NumberFormat('#,##0').format(amount)}',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Color _getStatusColor(SpendingStatus status) {
+    switch (status) {
+      case SpendingStatus.green:
+        return const Color(0xFF4ECDC4);
+      case SpendingStatus.yellow:
+        return const Color(0xFFF7DC6F);
+      case SpendingStatus.red:
+        return const Color(0xFFFF6B6B);
+    }
+  }
+}

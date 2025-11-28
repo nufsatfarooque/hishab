@@ -13,6 +13,7 @@ class FinanceProvider extends ChangeNotifier {
   Income? _income;
   bool _isLoading = false;
   ThemeMode _themeMode = ThemeMode.light;
+  String _userName = '';
 
   List<Expense> get expenses => _expenses;
   List<CategoryModel> get categories => _categories;
@@ -20,6 +21,8 @@ class FinanceProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   ThemeMode get themeMode => _themeMode;
   bool get isDarkMode => _themeMode == ThemeMode.dark;
+  String get userName => _userName;
+  String get firstName => _userName.split(' ').first;
 
   // Initialize data
   Future<void> initialize() async {
@@ -28,6 +31,7 @@ class FinanceProvider extends ChangeNotifier {
 
     try {
       await loadThemeMode();
+      await loadName();
       await loadCategories();
       await loadExpenses();
       await loadIncome();
@@ -53,6 +57,26 @@ class FinanceProvider extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('dark_mode', _themeMode == ThemeMode.dark);
     notifyListeners();
+  }
+
+  // Load user name
+  Future<void> loadName() async {
+    final prefs = await SharedPreferences.getInstance();
+    _userName = prefs.getString('user_name') ?? '';
+    notifyListeners();
+  }
+
+  // Save user name
+  Future<void> saveName(String name) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('user_name', name);
+    _userName = name;
+    notifyListeners();
+  }
+
+  // Update user name
+  Future<void> updateName(String name) async {
+    await saveName(name);
   }
 
   // Load categories

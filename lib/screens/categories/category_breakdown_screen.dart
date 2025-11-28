@@ -88,7 +88,7 @@ class _CategoryBreakdownScreenState extends State<CategoryBreakdownScreen> {
                     Container(
                       padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(24),
                         border: Border.all(
                           color: const Color(0xFFF16725).withOpacity(0.2),
@@ -161,7 +161,7 @@ class _CategoryBreakdownScreenState extends State<CategoryBreakdownScreen> {
                     Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
                           color: const Color(0xFFF16725).withOpacity(0.2),

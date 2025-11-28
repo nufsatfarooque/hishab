@@ -30,6 +30,10 @@ class SettingsScreen extends StatelessWidget {
           return ListView(
             padding: const EdgeInsets.all(16),
             children: [
+              _buildSection('Personal', [
+                _buildNameCard(context, provider),
+              ]),
+              const SizedBox(height: 24),
               _buildSection('Appearance', [
                 _buildThemeCard(context, provider),
               ]),
@@ -147,7 +151,7 @@ class SettingsScreen extends StatelessWidget {
           Switch(
             value: provider.isDarkMode,
             onChanged: (value) => provider.toggleThemeMode(),
-            activeColor: const Color(0xFFF16725),
+            activeThumbColor: const Color(0xFFF16725),
           ),
         ],
       ),
@@ -801,6 +805,155 @@ class SettingsScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildNameCard(BuildContext context, FinanceProvider provider) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: const Color(0xFFF16725).withOpacity(0.2),
+          width: 2,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFFF16725).withOpacity(0.1),
+            blurRadius: 15,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  const Color(0xFFF16725).withOpacity(0.2),
+                  const Color(0xFFF16725).withOpacity(0.1),
+                ],
+              ),
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: const Color(0xFFF16725).withOpacity(0.2),
+                  blurRadius: 8,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: const Icon(
+              Icons.person,
+              color: Color(0xFFF16725),
+              size: 28,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Name',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  provider.userName.isNotEmpty 
+                    ? provider.userName 
+                    : 'Not set',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          IconButton(
+            onPressed: () => _showNameDialog(context, provider),
+            icon: const Icon(
+              Icons.edit,
+              color: Color(0xFFF16725),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _showNameDialog(BuildContext context, FinanceProvider provider) async {
+    final nameController = TextEditingController(text: provider.userName);
+    
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Update Name'),
+          content: TextField(
+            controller: nameController,
+            decoration: const InputDecoration(
+              labelText: 'Your Name',
+              border: OutlineInputBorder(),
+            ),
+            autofocus: true,
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFF16725),
+              ),
+              onPressed: () async {
+                final newName = nameController.text.trim();
+                if (newName.isNotEmpty) {
+                  await provider.updateName(newName);
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Name updated successfully'),
+                        backgroundColor: Color(0xFFF16725),
+                      ),
+                    );
+                  }
+                } else {
+                  // Allow clearing the name
+                  await provider.updateName('');
+                  if (context.mounted) {
+                    Navigator.of(context).pop();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Name cleared'),
+                        backgroundColor: Color(0xFFF16725),
+                      ),
+                    );
+                  }
+                }
+              },
+              child: const Text(
+                'Save',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
